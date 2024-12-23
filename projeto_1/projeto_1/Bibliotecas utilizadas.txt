@@ -1,0 +1,12 @@
+Bibliotecas:
+
+Entrada e Saída Padrão
+<stdio.h>: Para entrada/saída padrão, como printf e scanf.
+
+
+Bibliotecas do Raspberry Pi Pico (SDK):
+"pico/stdlib.h": Para funções básicas de GPIO, temporização e inicialização do Pico.
+"hardware/gpio.h": Para controle direto dos pinos GPIO.
+"pico/time.h": Para manipulação de temporização e criação de atrasos.
+"hardware/pwm.h": Para controle de sinais PWM (modulação por largura de pulso).
+"hardware/clocks.h": Para gerenciar e configurar os clocks do sistema.
