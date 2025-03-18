@@ -28,43 +28,44 @@ set(PICO_BOARD pico_w CACHE STRING "Board type")
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
-project(Led+joystick C CXX ASM)
+project(teste_wifi C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(Led+joystick Led+joystick.c )
+add_executable(teste_wifi src/teste_wifi.c src/main.c src/placa_simulacao.c src/ssd1306_i2c.c src/interface.c)
 
-pico_set_program_name(Led+joystick "Led+joystick")
-pico_set_program_version(Led+joystick "0.1")
+pico_set_program_name(teste_wifi "teste_wifi")
+pico_set_program_version(teste_wifi "0.1")
 
 # Generate PIO header
-pico_generate_pio_header(Led+joystick ${CMAKE_CURRENT_LIST_DIR}/ws2818b.pio)
+pico_generate_pio_header(teste_wifi ${CMAKE_CURRENT_LIST_DIR}/ws2818b.pio)
 
 # Modify the below lines to enable/disable output over UART/USB
-pico_enable_stdio_uart(Led+joystick 0)
-pico_enable_stdio_usb(Led+joystick 1)
+pico_enable_stdio_uart(teste_wifi 0)
+pico_enable_stdio_usb(teste_wifi 1)
 
 # Add the standard library to the build
-target_link_libraries(Led+joystick
+target_link_libraries(teste_wifi
         pico_stdlib
         hardware_adc
-        hardware_pio
-        hardware_clocks
+        hardware_timer
+        m
         )
 
 # Add the standard include files to the build
-target_include_directories(Led+joystick PRIVATE
-  ${CMAKE_CURRENT_LIST_DIR}
+target_include_directories(teste_wifi PRIVATE
+        ${CMAKE_CURRENT_LIST_DIR}
 )
 
 # Add any user requested libraries
-target_link_libraries(Led+joystick 
+target_link_libraries(teste_wifi 
+        hardware_i2c
         hardware_pio
-        
+        pico_cyw43_arch_lwip_threadsafe_background
         )
 
-pico_add_extra_outputs(Led+joystick)
+pico_add_extra_outputs(teste_wifi)
 
