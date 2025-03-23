@@ -25,6 +25,7 @@ endif()
 # ====================================================================================
 set(PICO_BOARD pico_w CACHE STRING "Board type")
 
+
 # Pull in Raspberry Pi Pico SDK (must be before project)
 include(pico_sdk_import.cmake)
 
@@ -35,7 +36,7 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(wifi_mqtt wifi_mqtt.c )
+add_executable(wifi_mqtt src/wifi_mqtt.c src/mqtt.c)
 
 pico_set_program_name(wifi_mqtt "wifi_mqtt")
 pico_set_program_version(wifi_mqtt "0.1")
@@ -47,9 +48,13 @@ pico_generate_pio_header(wifi_mqtt ${CMAKE_CURRENT_LIST_DIR}/blink.pio)
 pico_enable_stdio_uart(wifi_mqtt 0)
 pico_enable_stdio_usb(wifi_mqtt 1)
 
+set(PICO_LWIP_ENABLE_MQTT 1)  # Habilita MQTT no LWIP
+
+
 # Add the standard library to the build
 target_link_libraries(wifi_mqtt
         pico_stdlib
+        pico_lwip_mqtt
         )
 
 # Add the standard include files to the build
